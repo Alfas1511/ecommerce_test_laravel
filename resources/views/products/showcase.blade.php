@@ -4,12 +4,35 @@
     <div style="max-width: 1200px; margin: auto; padding: 20px;">
         <h2 style="text-align: center; margin-bottom: 30px;">🛍️ Our Products</h2>
 
+        <form method="GET" action="{{ route('products.showcase') }}"
+            style="margin-bottom: 30px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center;">
+            <input type="text" name="search" placeholder="Search by name..." value="{{ request('search') }}"
+                style="padding: 8px; border: 1px solid #ccc; border-radius: 5px; flex: 1; min-width: 200px;">
+
+            <input type="number" name="min_price" placeholder="Min Price" step="0.01"
+                value="{{ request('min_price') }}"
+                style="padding: 8px; border: 1px solid #ccc; border-radius: 5px; width: 120px;">
+
+            <input type="number" name="max_price" placeholder="Max Price" step="0.01"
+                value="{{ request('max_price') }}"
+                style="padding: 8px; border: 1px solid #ccc; border-radius: 5px; width: 120px;">
+
+            <button type="submit"
+                style="padding: 8px 15px; background-color: #007bff; color: white; border: none; border-radius: 5px;">
+                Filter
+            </button>
+            <a href="{{ route('products.showcase') }}"
+                style="padding: 8px 15px; background-color: #6c757d; color: white; border: none; border-radius: 5px; text-decoration: none;">
+                Reset
+            </a>
+        </form>
+
         <div
             style="
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 20px;
-        ">
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                gap: 20px;
+            ">
             @forelse ($products as $product)
                 <div
                     style="

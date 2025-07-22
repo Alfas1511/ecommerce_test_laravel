@@ -111,10 +111,19 @@ class ProductController extends Controller
         return redirect()->route('products.index')->with('success', 'Product Deleted Successfully');
     }
 
-    public function showcase()
+    public function showcase(Request $request)
     {
-        $products = Product::all();
-
+        $query = Product::query();
+        if ($request->filled('search')) {
+            $query->where('name', 'like', '%' . $request->search . '%');
+        }
+        if ($request->filled('min_price')) {
+            $query->where('price', '>=', $request->min_price);
+        }
+        if ($request->filled('max_price')) {
+            $query->where('price', '<=', $request->max_price);
+        }
+        $products = $query->orderBy('name')->get();
         return view('products.showcase', compact('products'));
     }
 }
